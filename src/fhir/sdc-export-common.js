@@ -141,7 +141,7 @@ function addCommonSDCExportFns(ns) {
     targetItem.linkId = item.linkId;
 
     // Text & prefix
-    targetItem.text = item.question + '-+-';
+    targetItem.text = item.question;
     if (item.prefix) {
       targetItem.prefix = item.prefix;
     }
@@ -936,7 +936,7 @@ function addCommonSDCExportFns(ns) {
     }
     var targetItem = (isForm || lfItem.dataType === 'TITLE')? {}: {
         linkId: lfItem.linkId,
-        text: lfItem.question + '-+-'
+        text: lfItem.question
       };
 
     // just handle/convert the current item's value, no-recursion to sub-items at this step.

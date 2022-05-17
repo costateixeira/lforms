@@ -36,7 +36,6 @@ function addCommonSDCImportFns(ns) {
   self.fhirExtLaunchContext = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext";
   self.fhirExtMaxSize = "http://hl7.org/fhir/StructureDefinition/maxSize";
   self.fhirExtMimeType = "http://hl7.org/fhir/StructureDefinition/mimeType";
-  self.fhirExtTranslation = "http://hl7.org/fhir/StructureDefinition/translation";
 
   self.fhirExtUrlRestrictionArray = [
     self.fhirExtUrlMinValue,
@@ -442,11 +441,10 @@ function addCommonSDCImportFns(ns) {
    */
   self._processTextAndPrefix = function(lfItem, qItem) {
     // prefix
-    qItem.text = qItem.text+'++HH++';
     if (qItem.prefix)
       lfItem.prefix = qItem.prefix;
     // text
-    lfItem.question = qItem.text+"--XX--";
+    lfItem.question = qItem.text;
 
     // Copy item extensions
     for (let extField of ['_prefix', '_text']) {
@@ -1217,7 +1215,7 @@ function addCommonSDCImportFns(ns) {
         ret = {
           codingInstructionsFormat: "html",
           codingInstructions: xhtmlFormat.valueString,
-          codingInstructionsPlain: qItem.text+'--'  // this always contains the coding instructions in plain text
+          codingInstructionsPlain: qItem.text  // this always contains the coding instructions in plain text
         };
       }
       // no xhtml extension, default to 'text'
@@ -1225,7 +1223,7 @@ function addCommonSDCImportFns(ns) {
         ret = {
           codingInstructionsFormat: "text",
           codingInstructions: qItem.text,
-          codingInstructionsPlain: qItem.text+'--' // this always contains the coding instructions in plain text
+          codingInstructionsPlain: qItem.text // this always contains the coding instructions in plain text
         };
       }
     }
@@ -1248,9 +1246,9 @@ function addCommonSDCImportFns(ns) {
         var help = self._processCodingInstructions(qItem.item[i]);
         // pick one coding instruction if there are multiple ones in Questionnaire
         if (help !== null) {
-          targetItem.codingInstructions = help.codingInstructions+'1';
-          targetItem.codingInstructionsFormat = help.codingInstructionsFormat+'2';
-          targetItem.codingInstructionsPlain = help.codingInstructionsPlain+'3';
+          targetItem.codingInstructions = help.codingInstructions;
+          targetItem.codingInstructionsFormat = help.codingInstructionsFormat;
+          targetItem.codingInstructionsPlain = help.codingInstructionsPlain;
         }
         else {
           var item = self._processQuestionnaireItem(qItem.item[i], containedVS, linkIdItemMap);
